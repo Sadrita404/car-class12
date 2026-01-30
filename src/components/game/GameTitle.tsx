@@ -23,7 +23,7 @@ const GameTitle = () => {
         transition={{ delay: 0.5 }}
         className="mt-6 text-lg text-muted-foreground font-game uppercase tracking-wide"
       >
-        Two Player Racing Challenge
+        Two Player Racing Challenge By Class 12 
       </motion.p>
     </motion.div>
   );
