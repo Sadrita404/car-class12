@@ -150,14 +150,6 @@ Please keep changes focused and add tests for new behavior.
 
 ---
 
-## ⚠️ Notes & TODOs
-
-- Add a `LICENSE` file if you want to open-source this repo (common choice: MIT).
-- Add CI (e.g., GitHub Actions) to run lint, tests, and builds on PRs.
-- Consider Storybook for component development and documentation.
-
----
-
 ## 📬 Acknowledgements
 
 Built with ❤️ using **Vite**, **React**, **Tailwind CSS**, **Radix UI**, and **Vitest**. If you'd like help extending this starter or making a deploy pipeline, open an issue or PR.
