@@ -1,5 +1,7 @@
 # Car Class12 — Vite + React + TypeScript + shadcn UI 🎮
-# Live Website Link - https://car-class12-6ax1i76vk-sadritaneogi-6560s-projects.vercel.app/
+## 🚀 Live Website  
+# 🔗 **[Visit Live Website](https://car-class12-6ax1i76vk-sadritaneogi-6560s-projects.vercel.app/)**
+
 
 **A lightweight Vite + React + TypeScript starter with shadcn-style components, Tailwind CSS, and Radix primitives — includes a small car-race game demo.**
 
@@ -17,7 +19,13 @@ Key features:
 - Vitest for unit testing
 
 ---
+# Website View
+<img width="716" height="370" alt="Screenshot 2026-01-31 at 2 43 20 AM" src="https://github.com/user-attachments/assets/974ad6b4-cf60-4fd7-9239-c10d4d17db7a" />
+<img width="716" height="370" alt="Screenshot 2026-01-31 at 2 44 37 AM" src="https://github.com/user-attachments/assets/0d79a920-af4a-4ddf-8187-df3f4805aa26" />
+<img width="716" height="370" alt="Screenshot 2026-01-31 at 2 45 08 AM" src="https://github.com/user-attachments/assets/62e37330-5f55-48a5-ae62-92296a2baa7b" />
 
+
+---
 ## 🧭 Quick start
 
 1. Clone the repo
@@ -50,7 +58,9 @@ npm run dev
 
 Open http://localhost:5173 to view the app locally.
 
-**Live demo:** https://car-class12-6ax1i76vk-sadritaneogi-6560s-projects.vercel.app/
+## 🚀 Live Website
+[Click here to view the live site](https://car-class12-6ax1i76vk-sadritaneogi-6560s-projects.vercel.app/)
+
 
 ---
 
