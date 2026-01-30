@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
-import { Trophy, Medal, RotateCcw } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Trophy, Medal } from "lucide-react";
 
 interface ScoreboardProps {
   player1Score: number;
@@ -7,127 +8,125 @@ interface ScoreboardProps {
   onPlayAgain: () => void;
 }
 
-const Scoreboard = ({ player1Score, player2Score, onPlayAgain }: ScoreboardProps) => {
-  const winner = player1Score < player2Score ? 1 : player1Score > player2Score ? 2 : 0;
+const Scoreboard = ({
+  player1Score,
+  player2Score,
+  onPlayAgain,
+}: ScoreboardProps) => {
+  const winner = player1Score < player2Score ? 1 : player2Score < player1Score ? 2 : 0;
+  const difference = Math.abs(player1Score - player2Score) / 1000;
 
   return (
     <motion.div
-      initial={{ opacity: 0, scale: 0.8 }}
+      initial={{ opacity: 0, scale: 0.9 }}
       animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 0.5 }}
-      className="text-center space-y-8"
+      className="flex flex-col items-center gap-8"
     >
-      {/* Trophy Animation */}
+      {/* Winner announcement */}
       <motion.div
-        initial={{ y: -50, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ delay: 0.3, type: "spring" }}
+        initial={{ y: -20 }}
+        animate={{ y: 0 }}
+        className="text-center"
       >
-        <Trophy className="w-20 h-20 mx-auto text-accent animate-float" />
-      </motion.div>
-
-      {/* Winner Announcement */}
-      <motion.div
-        initial={{ scale: 0 }}
-        animate={{ scale: 1 }}
-        transition={{ delay: 0.5, type: "spring" }}
-      >
-        {winner === 0 ? (
-          <h2 className="font-pixel text-3xl neon-text-yellow">IT'S A TIE!</h2>
+        {winner !== 0 ? (
+          <>
+            <motion.div
+              animate={{ 
+                scale: [1, 1.1, 1],
+              }}
+              transition={{ duration: 2, repeat: Infinity }}
+              className="flex justify-center mb-4"
+            >
+              <Trophy className="w-16 h-16 text-primary" />
+            </motion.div>
+            <h2 className="font-title text-5xl text-valorant tracking-wider uppercase">
+              Player {winner} Wins!
+            </h2>
+            <p className="mt-2 text-muted-foreground font-game uppercase">
+              By {difference.toFixed(2)} seconds
+            </p>
+          </>
         ) : (
-          <h2
-            className={`font-pixel text-3xl ${
-              winner === 1 ? "neon-text-cyan" : "neon-text-magenta"
-            }`}
-          >
-            PLAYER {winner} WINS!
-          </h2>
+          <>
+            <Medal className="w-16 h-16 text-primary mx-auto mb-4" />
+            <h2 className="font-title text-5xl text-foreground tracking-wider uppercase">
+              It's a Tie!
+            </h2>
+            <p className="mt-2 text-muted-foreground font-game uppercase">
+              Incredible timing!
+            </p>
+          </>
         )}
       </motion.div>
 
-      {/* Score Cards */}
-      <div className="flex flex-col md:flex-row gap-6 justify-center items-center">
-        {/* Player 1 Score */}
+      {/* Score comparison */}
+      <div className="flex gap-6">
         <motion.div
-          initial={{ x: -100, opacity: 0 }}
+          initial={{ x: -50, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
-          transition={{ delay: 0.7 }}
-          className={`relative p-6 rounded-xl border-2 w-64 ${
+          transition={{ delay: 0.2 }}
+          className={`px-8 py-6 rounded border-2 text-center relative ${
             winner === 1
-              ? "neon-box-cyan bg-primary/10"
-              : "border-muted bg-card"
+              ? "border-primary bg-primary/10"
+              : "border-border bg-card"
           }`}
         >
           {winner === 1 && (
-            <Medal className="absolute -top-3 -right-3 w-8 h-8 text-accent" />
+            <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-primary text-primary-foreground text-xs font-game uppercase rounded">
+              Winner
+            </div>
           )}
-          <p className="font-game text-lg text-muted-foreground mb-2">
+          <p className="text-sm text-muted-foreground font-game uppercase">
             Player 1
           </p>
-          <p
-            className={`font-pixel text-2xl ${
-              winner === 1 ? "neon-text-cyan" : "text-foreground"
-            }`}
-          >
+          <p className={`text-4xl font-title ${winner === 1 ? "text-primary" : "text-foreground"}`}>
             {(player1Score / 1000).toFixed(2)}s
           </p>
         </motion.div>
 
-        {/* Player 2 Score */}
         <motion.div
-          initial={{ x: 100, opacity: 0 }}
+          initial={{ x: 50, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
-          transition={{ delay: 0.7 }}
-          className={`relative p-6 rounded-xl border-2 w-64 ${
+          transition={{ delay: 0.3 }}
+          className={`px-8 py-6 rounded border-2 text-center relative ${
             winner === 2
-              ? "neon-box-magenta bg-secondary/10"
-              : "border-muted bg-card"
+              ? "border-primary bg-primary/10"
+              : "border-border bg-card"
           }`}
         >
           {winner === 2 && (
-            <Medal className="absolute -top-3 -right-3 w-8 h-8 text-accent" />
+            <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-primary text-primary-foreground text-xs font-game uppercase rounded">
+              Winner
+            </div>
           )}
-          <p className="font-game text-lg text-muted-foreground mb-2">
+          <p className="text-sm text-muted-foreground font-game uppercase">
             Player 2
           </p>
-          <p
-            className={`font-pixel text-2xl ${
-              winner === 2 ? "neon-text-magenta" : "text-foreground"
-            }`}
-          >
+          <p className={`text-4xl font-title ${winner === 2 ? "text-primary" : "text-foreground"}`}>
             {(player2Score / 1000).toFixed(2)}s
           </p>
         </motion.div>
       </div>
 
-      {/* Time Difference */}
-      {winner !== 0 && (
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1 }}
-          className="text-muted-foreground font-game"
-        >
-          Winner by{" "}
-          <span className="text-accent">
-            {Math.abs((player1Score - player2Score) / 1000).toFixed(2)}s
-          </span>
-        </motion.p>
-      )}
-
-      {/* Play Again Button */}
-      <motion.button
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1.2 }}
-        onClick={onPlayAgain}
-        className="mx-auto flex items-center gap-3 px-8 py-4 rounded-xl font-game text-lg bg-accent/20 border-2 border-accent text-accent hover:bg-accent hover:text-accent-foreground transition-all duration-300"
+      {/* Play again button */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.5 }}
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
       >
-        <RotateCcw className="w-5 h-5" />
-        PLAY AGAIN
-      </motion.button>
+        <Button
+          onClick={onPlayAgain}
+          size="lg"
+          className="font-title text-2xl px-12 py-8 bg-gradient-to-r from-primary to-accent hover:opacity-90 text-primary-foreground uppercase tracking-wider"
+          style={{
+            boxShadow: "0 0 30px hsl(0 85% 55% / 0.4)",
+          }}
+        >
+          Race Again
+        </Button>
+      </motion.div>
     </motion.div>
   );
 };
