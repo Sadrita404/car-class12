@@ -57,11 +57,12 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
-        neon: {
-          cyan: "hsl(var(--neon-cyan))",
-          magenta: "hsl(var(--neon-magenta))",
-          yellow: "hsl(var(--neon-yellow))",
-          green: "hsl(var(--neon-green))",
+        valorant: {
+          red: "hsl(var(--val-red))",
+          "red-dark": "hsl(var(--val-red-dark))",
+          white: "hsl(var(--val-white))",
+          black: "hsl(var(--val-black))",
+          gray: "hsl(var(--val-gray))",
         },
         track: {
           dark: "hsl(var(--track-dark))",
@@ -69,8 +70,8 @@ export default {
         },
       },
       fontFamily: {
-        game: ['Orbitron', 'sans-serif'],
-        pixel: ['"Press Start 2P"', 'cursive'],
+        game: ['Rajdhani', 'sans-serif'],
+        title: ['Teko', 'sans-serif'],
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -86,9 +87,9 @@ export default {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
-        "pulse-neon": {
+        "pulse-glow": {
           "0%, 100%": { opacity: "1", filter: "brightness(1)" },
-          "50%": { opacity: "0.8", filter: "brightness(1.3)" },
+          "50%": { opacity: "0.85", filter: "brightness(1.2)" },
         },
         "road-move": {
           "0%": { transform: "translateY(0)" },
@@ -98,8 +99,8 @@ export default {
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
-        "pulse-neon": "pulse-neon 2s ease-in-out infinite",
-        "road-move": "road-move 0.5s linear infinite",
+        "pulse-glow": "pulse-glow 2s ease-in-out infinite",
+        "road-move": "road-move 0.3s linear infinite",
       },
     },
   },

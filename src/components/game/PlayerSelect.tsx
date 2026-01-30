@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { User, Trophy } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 interface PlayerSelectProps {
   currentPlayer: 1 | 2;
@@ -16,146 +16,79 @@ const PlayerSelect = ({
 }: PlayerSelectProps) => {
   return (
     <motion.div
-      initial={{ opacity: 0, scale: 0.9 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 0.5 }}
-      className="space-y-8"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      className="flex flex-col items-center gap-8"
     >
-      {/* Player Cards */}
-      <div className="flex flex-col md:flex-row gap-6 justify-center items-center">
-        {/* Player 1 */}
+      {/* Player indicator */}
+      <div className="text-center">
         <motion.div
-          className={`relative p-6 rounded-xl border-2 w-64 transition-all duration-300 ${
-            currentPlayer === 1
-              ? "neon-box-cyan bg-card"
-              : "border-muted bg-muted/20"
-          }`}
-          whileHover={{ scale: currentPlayer === 1 ? 1.05 : 1 }}
+          key={currentPlayer}
+          initial={{ scale: 0.8, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          className="relative inline-block"
         >
-          <div className="flex items-center gap-3 mb-4">
-            <div
-              className={`p-3 rounded-full ${
-                currentPlayer === 1 ? "bg-primary/20" : "bg-muted"
-              }`}
-            >
-              <User
-                className={`w-6 h-6 ${
-                  currentPlayer === 1 ? "text-primary" : "text-muted-foreground"
-                }`}
-              />
-            </div>
-            <span
-              className={`font-game text-xl ${
-                currentPlayer === 1 ? "neon-text-cyan" : "text-muted-foreground"
-              }`}
-            >
-              Player 1
-            </span>
-          </div>
-
-          {player1Score !== null ? (
-            <div className="flex items-center gap-2 mt-4">
-              <Trophy className="w-5 h-5 text-accent" />
-              <span className="font-game text-accent">
-                {(player1Score / 1000).toFixed(2)}s
-              </span>
-            </div>
-          ) : currentPlayer === 1 ? (
-            <span className="text-sm text-primary animate-pulse-neon">
-              Ready to race!
-            </span>
-          ) : (
-            <span className="text-sm text-muted-foreground">Waiting...</span>
-          )}
-
-          {currentPlayer === 1 && (
-            <motion.div
-              className="absolute -top-2 -right-2 w-4 h-4 rounded-full bg-primary"
-              animate={{ scale: [1, 1.2, 1] }}
-              transition={{ duration: 1, repeat: Infinity }}
-            />
-          )}
+          <h3 className="font-title text-5xl text-valorant tracking-wider uppercase">
+            Player {currentPlayer}
+          </h3>
+          <div className="absolute -bottom-2 left-0 right-0 h-0.5 bg-primary" />
         </motion.div>
-
-        {/* VS Divider */}
-        <div className="font-pixel text-2xl neon-text-yellow">VS</div>
-
-        {/* Player 2 */}
-        <motion.div
-          className={`relative p-6 rounded-xl border-2 w-64 transition-all duration-300 ${
-            currentPlayer === 2
-              ? "neon-box-magenta bg-card"
-              : "border-muted bg-muted/20"
-          }`}
-          whileHover={{ scale: currentPlayer === 2 ? 1.05 : 1 }}
-        >
-          <div className="flex items-center gap-3 mb-4">
-            <div
-              className={`p-3 rounded-full ${
-                currentPlayer === 2 ? "bg-secondary/20" : "bg-muted"
-              }`}
-            >
-              <User
-                className={`w-6 h-6 ${
-                  currentPlayer === 2
-                    ? "text-secondary"
-                    : "text-muted-foreground"
-                }`}
-              />
-            </div>
-            <span
-              className={`font-game text-xl ${
-                currentPlayer === 2
-                  ? "neon-text-magenta"
-                  : "text-muted-foreground"
-              }`}
-            >
-              Player 2
-            </span>
-          </div>
-
-          {player2Score !== null ? (
-            <div className="flex items-center gap-2 mt-4">
-              <Trophy className="w-5 h-5 text-accent" />
-              <span className="font-game text-accent">
-                {(player2Score / 1000).toFixed(2)}s
-              </span>
-            </div>
-          ) : currentPlayer === 2 ? (
-            <span className="text-sm text-secondary animate-pulse-neon">
-              Ready to race!
-            </span>
-          ) : (
-            <span className="text-sm text-muted-foreground">Waiting...</span>
-          )}
-
-          {currentPlayer === 2 && (
-            <motion.div
-              className="absolute -top-2 -right-2 w-4 h-4 rounded-full bg-secondary"
-              animate={{ scale: [1, 1.2, 1] }}
-              transition={{ duration: 1, repeat: Infinity }}
-            />
-          )}
-        </motion.div>
+        <p className="mt-4 text-muted-foreground font-game uppercase tracking-wide">
+          Get Ready to Race
+        </p>
       </div>
 
-      {/* Start Button */}
-      <motion.button
-        onClick={onStartGame}
-        className={`mx-auto block px-10 py-4 rounded-xl font-game text-xl transition-all duration-300 border-2 ${
-          currentPlayer === 1
-            ? "bg-primary/20 border-primary text-primary hover:bg-primary hover:text-primary-foreground neon-box-cyan"
-            : "bg-secondary/20 border-secondary text-secondary hover:bg-secondary hover:text-secondary-foreground neon-box-magenta"
-        }`}
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-      >
-        START PLAYER {currentPlayer}
-      </motion.button>
+      {/* Scores display */}
+      <div className="flex gap-8">
+        <div
+          className={`px-6 py-4 rounded border-2 transition-all ${
+            currentPlayer === 1
+              ? "border-primary bg-primary/10"
+              : "border-border bg-card"
+          }`}
+        >
+          <p className="text-sm text-muted-foreground font-game uppercase">Player 1</p>
+          <p className="text-2xl font-title text-foreground">
+            {player1Score !== null
+              ? `${(player1Score / 1000).toFixed(2)}s`
+              : "---"}
+          </p>
+        </div>
+        <div
+          className={`px-6 py-4 rounded border-2 transition-all ${
+            currentPlayer === 2
+              ? "border-primary bg-primary/10"
+              : "border-border bg-card"
+          }`}
+        >
+          <p className="text-sm text-muted-foreground font-game uppercase">Player 2</p>
+          <p className="text-2xl font-title text-foreground">
+            {player2Score !== null
+              ? `${(player2Score / 1000).toFixed(2)}s`
+              : "---"}
+          </p>
+        </div>
+      </div>
 
-      <p className="text-center text-muted-foreground text-sm font-game">
-        Use ← → Arrow Keys to steer • Avoid obstacles • Reach the finish line!
-      </p>
+      {/* Start button */}
+      <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+        <Button
+          onClick={onStartGame}
+          size="lg"
+          className="font-title text-2xl px-12 py-8 bg-gradient-to-r from-primary to-accent hover:opacity-90 text-primary-foreground uppercase tracking-wider border-0"
+          style={{
+            boxShadow: "0 0 30px hsl(0 85% 55% / 0.4)",
+          }}
+        >
+          Start Race
+        </Button>
+      </motion.div>
+
+      {/* Instructions */}
+      <div className="text-center text-muted-foreground font-game text-sm uppercase tracking-wide">
+        <p>Use ← → arrow keys to steer</p>
+        <p className="mt-1">Avoid obstacles • Reach the finish line</p>
+      </div>
     </motion.div>
   );
 };

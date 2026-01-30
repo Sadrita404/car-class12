@@ -8,17 +8,20 @@ const GameTitle = () => {
       transition={{ duration: 0.8, ease: "easeOut" }}
       className="text-center mb-8"
     >
-      <h1 className="font-pixel text-4xl md:text-6xl neon-text-cyan mb-4 tracking-wider">
-        NEON
-      </h1>
-      <h2 className="font-pixel text-3xl md:text-5xl neon-text-magenta tracking-widest">
-        RACER
+      <div className="relative inline-block">
+        <h1 className="font-title text-6xl md:text-8xl text-valorant tracking-widest">
+          VELOCITY
+        </h1>
+        <div className="absolute -bottom-1 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-primary to-transparent" />
+      </div>
+      <h2 className="font-title text-4xl md:text-6xl text-foreground tracking-[0.3em] mt-2">
+        RUSH
       </h2>
       <motion.p
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.5 }}
-        className="mt-6 text-lg text-muted-foreground font-game"
+        className="mt-6 text-lg text-muted-foreground font-game uppercase tracking-wide"
       >
         Two Player Racing Challenge
       </motion.p>
