@@ -17,6 +17,7 @@ const Index = () => {
   const [currentPlayer, setCurrentPlayer] = useState<1 | 2>(1);
   const [player1Score, setPlayer1Score] = useState<number | null>(null);
   const [player2Score, setPlayer2Score] = useState<number | null>(null);
+  const [trackLength, setTrackLength] = useState<50 | 100>(50);
 
   const handleStartGame = () => {
     setGameState("playing");
@@ -37,6 +38,7 @@ const Index = () => {
     setPlayer1Score(null);
     setPlayer2Score(null);
     setCurrentPlayer(1);
+    setTrackLength(50);
     setGameState("select");
   };
 
@@ -89,12 +91,14 @@ const Index = () => {
             currentPlayer={currentPlayer}
             player1Score={player1Score}
             player2Score={player2Score}
+            trackLength={trackLength}
+            onTrackLengthChange={currentPlayer === 1 ? setTrackLength : undefined}
             onStartGame={handleStartGame}
           />
         )}
 
         {gameState === "playing" && (
-          <RaceTrack player={currentPlayer} onGameEnd={handleGameEnd} />
+          <RaceTrack player={currentPlayer} trackLength={trackLength} onGameEnd={handleGameEnd} />
         )}
 
         {gameState === "results" && player1Score !== null && player2Score !== null && (
