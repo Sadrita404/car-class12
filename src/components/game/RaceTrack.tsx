@@ -457,8 +457,32 @@ const RaceTrack = ({ player, onGameEnd }: RaceTrackProps) => {
         </div>
       </div>
 
-      <p className="text-sm text-muted-foreground font-game uppercase tracking-wide">
-        ← → Arrow Keys to Steer
+      {/* Mobile Controls */}
+      <div className="flex items-center gap-8 mt-4">
+        <button
+          className="w-16 h-16 bg-secondary hover:bg-secondary/80 active:bg-primary/30 border-2 border-primary/50 rounded-lg flex items-center justify-center text-3xl text-foreground transition-colors select-none touch-none"
+          onPointerDown={() => keysPressed.current.add("ArrowLeft")}
+          onPointerUp={() => keysPressed.current.delete("ArrowLeft")}
+          onPointerLeave={() => keysPressed.current.delete("ArrowLeft")}
+          onPointerCancel={() => keysPressed.current.delete("ArrowLeft")}
+          aria-label="Steer Left"
+        >
+          ←
+        </button>
+        <button
+          className="w-16 h-16 bg-secondary hover:bg-secondary/80 active:bg-primary/30 border-2 border-primary/50 rounded-lg flex items-center justify-center text-3xl text-foreground transition-colors select-none touch-none"
+          onPointerDown={() => keysPressed.current.add("ArrowRight")}
+          onPointerUp={() => keysPressed.current.delete("ArrowRight")}
+          onPointerLeave={() => keysPressed.current.delete("ArrowRight")}
+          onPointerCancel={() => keysPressed.current.delete("ArrowRight")}
+          aria-label="Steer Right"
+        >
+          →
+        </button>
+      </div>
+
+      <p className="text-sm text-muted-foreground font-game uppercase tracking-wide mt-2">
+        ← → Arrow Keys or Tap Buttons
       </p>
     </motion.div>
   );
