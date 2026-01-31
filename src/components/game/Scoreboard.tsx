@@ -53,7 +53,7 @@ const Scoreboard = ({
               It's a Tie!
             </h2>
             <p className="mt-2 text-muted-foreground font-game uppercase">
-              Incredible timing!
+              Both finished in {(player1Score / 1000).toFixed(2)}s
             </p>
           </>
         )}
@@ -71,11 +71,15 @@ const Scoreboard = ({
               : "border-border bg-card"
           }`}
         >
-          {winner === 1 && (
+          {winner === 1 ? (
             <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-primary text-primary-foreground text-xs font-game uppercase rounded">
               Winner
             </div>
-          )}
+          ) : winner === 0 ? (
+            <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-muted text-muted-foreground text-xs font-game uppercase rounded">
+              Tie
+            </div>
+          ) : null}
           <p className="text-sm text-muted-foreground font-game uppercase">
             Player 1
           </p>
@@ -94,11 +98,15 @@ const Scoreboard = ({
               : "border-border bg-card"
           }`}
         >
-          {winner === 2 && (
+          {winner === 2 ? (
             <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-primary text-primary-foreground text-xs font-game uppercase rounded">
               Winner
             </div>
-          )}
+          ) : winner === 0 ? (
+            <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-muted text-muted-foreground text-xs font-game uppercase rounded">
+              Tie
+            </div>
+          ) : null}
           <p className="text-sm text-muted-foreground font-game uppercase">
             Player 2
           </p>

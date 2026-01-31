@@ -13,6 +13,7 @@ interface Obstacle {
   y: number;
   width: number;
   type: "barrier" | "cone" | "oil";
+  hit?: boolean;
 }
 
 const TRACK_WIDTH = 320;
@@ -31,6 +32,10 @@ const RaceTrack = ({ player, onGameEnd }: RaceTrackProps) => {
   const [collision, setCollision] = useState(false);
   const [startTime, setStartTime] = useState<number | null>(null);
   const [currentTime, setCurrentTime] = useState(0);
+
+  // Penalty state handled via ref so the game loop always sees the latest multiplier.
+  const penaltyRef = useRef({ multiplier: 1, until: 0 } as { multiplier: number; until: number });
+  const penaltyTimeoutRef = useRef<number | null>(null);
 
   const keysPressed = useRef<Set<string>>(new Set());
   const gameLoopRef = useRef<number | null>(null);
@@ -74,8 +79,8 @@ const RaceTrack = ({ player, onGameEnd }: RaceTrackProps) => {
     };
   }, []);
 
-  // Collision detection
-  const checkCollision = useCallback(
+  // Collision detection - returns the obstacle that was hit (or null)
+  const detectCollision = useCallback(
     (carXPos: number, obs: Obstacle[]) => {
       const carTop = TRACK_HEIGHT - CAR_HEIGHT - 30;
       const carBottom = TRACK_HEIGHT - 30;
@@ -94,10 +99,10 @@ const RaceTrack = ({ player, onGameEnd }: RaceTrackProps) => {
           carBottom > obsTop &&
           carTop < obsBottom
         ) {
-          return true;
+          return obstacle;
         }
       }
-      return false;
+      return null;
     },
     []
   );
@@ -106,12 +111,18 @@ const RaceTrack = ({ player, onGameEnd }: RaceTrackProps) => {
   useEffect(() => {
     if (!gameStarted) return;
 
-    const speed = 8;
-    const carSpeed = 6;
+    const baseSpeed = 8;
+    const baseCarSpeed = 6;
 
     const gameLoop = () => {
+      const now = Date.now();
+      const activeMultiplier = penaltyRef.current.until > now ? penaltyRef.current.multiplier : 1;
+
+      const effectiveSpeed = baseSpeed * activeMultiplier;
+      const effectiveCarSpeed = baseCarSpeed * activeMultiplier;
+
       setDistance((prev) => {
-        const newDistance = prev + speed;
+        const newDistance = prev + effectiveSpeed;
 
         // Check for finish
         if (newDistance >= FINISH_DISTANCE) {
@@ -131,22 +142,22 @@ const RaceTrack = ({ player, onGameEnd }: RaceTrackProps) => {
         setCurrentTime(Date.now() - startTime);
       }
 
-      // Move car
+      // Move car (slower when penalized)
       setCarX((prev) => {
         let newX = prev;
         if (keysPressed.current.has("ArrowLeft")) {
-          newX = Math.max(15, prev - carSpeed);
+          newX = Math.max(15, prev - effectiveCarSpeed);
         }
         if (keysPressed.current.has("ArrowRight")) {
-          newX = Math.min(TRACK_WIDTH - CAR_WIDTH - 15, prev + carSpeed);
+          newX = Math.min(TRACK_WIDTH - CAR_WIDTH - 15, prev + effectiveCarSpeed);
         }
         return newX;
       });
 
-      // Generate obstacles
+      // Generate obstacles and move them down
       setObstacles((prev) => {
         let updated = prev
-          .map((obs) => ({ ...obs, y: obs.y + speed }))
+          .map((obs) => ({ ...obs, y: obs.y + effectiveSpeed }))
           .filter((obs) => obs.y < TRACK_HEIGHT + 50);
 
         // Add new obstacle randomly
@@ -165,14 +176,55 @@ const RaceTrack = ({ player, onGameEnd }: RaceTrackProps) => {
         return updated;
       });
 
-      // Check collision
+      // Check collision and apply penalties
       setCarX((currentCarX) => {
         setObstacles((currentObs) => {
-          if (checkCollision(currentCarX, currentObs)) {
+          const collided = detectCollision(currentCarX, currentObs);
+          if (collided) {
+            // Apply penalty based on obstacle type
+            let multiplier = 0.6;
+            let duration = 900;
+
+            if (collided.type === "barrier") {
+              multiplier = 0.4;
+              duration = 1400;
+            } else if (collided.type === "cone") {
+              multiplier = 0.75;
+              duration = 700;
+            } else if (collided.type === "oil") {
+              multiplier = 0.5;
+              duration = 1100;
+            }
+
+            // Remove the obstacle so we don't re-collide
+            const remaining = currentObs.filter((o) => o.id !== collided.id);
+
+            // Apply penalty
+            penaltyRef.current.multiplier = multiplier;
+            penaltyRef.current.until = Date.now() + duration;
+            if (penaltyTimeoutRef.current) {
+              window.clearTimeout(penaltyTimeoutRef.current);
+            }
+            penaltyTimeoutRef.current = window.setTimeout(() => {
+              penaltyRef.current.multiplier = 1;
+              penaltyRef.current.until = 0;
+              penaltyTimeoutRef.current = null;
+            }, duration);
+
+            // Collision visual & sound
             setCollision(true);
             playSound("collision");
             setTimeout(() => setCollision(false), 300);
+
+            // Oil creates a small lateral slip
+            if (collided.type === "oil") {
+              const slip = (Math.random() - 0.5) * 40; // -20..20
+              setCarX((x) => Math.max(15, Math.min(TRACK_WIDTH - CAR_WIDTH - 15, x + slip)));
+            }
+
+            return remaining;
           }
+
           return currentObs;
         });
         return currentCarX;
@@ -188,8 +240,13 @@ const RaceTrack = ({ player, onGameEnd }: RaceTrackProps) => {
         cancelAnimationFrame(gameLoopRef.current);
       }
       stopEngineLoop();
+      // clear any pending penalty timeout
+      if (penaltyTimeoutRef.current) {
+        window.clearTimeout(penaltyTimeoutRef.current);
+        penaltyTimeoutRef.current = null;
+      }
     };
-  }, [gameStarted, startTime, checkCollision, onGameEnd, playSound, stopEngineLoop]);
+  }, [gameStarted, startTime, detectCollision, onGameEnd, playSound, stopEngineLoop]);
 
   const progress = Math.min((distance / FINISH_DISTANCE) * 100, 100);
 
