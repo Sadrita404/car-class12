@@ -1,28 +1,54 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- TODO: Set the document title to the name of your application -->
     <title>Class12</title>
-    <meta name="description" content="Class 12 CAR GAME">
+    <meta name="description" content="Class 12 CAR GAME" />
     <meta name="author" content="Lovable" />
 
     <!-- TODO: Update og:title to match your application name -->
-    
-    
+
     <meta property="og:type" content="website" />
-    <meta property="og:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+    <meta
+      property="og:image"
+      content="https://lovable.dev/opengraph-image-p98pqg.png" />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="@Lovable" />
-    <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
-    <meta property="og:title" content="Class12">
-  <meta name="twitter:title" content="Class12">
-  <meta property="og:description" content="Class 12 CAR GAME">
-  <meta name="twitter:description" content="Class 12 CAR GAME">
-  <link rel="icon" type="image/png" href="https://storage.googleapis.com/gpt-engineer-file-uploads/j4fP39skTCSqlk0kYofj5wDcqf82/uploads/1769803920979-github.png">
-</head>
+    <meta
+      name="twitter:image"
+      content="https://lovable.dev/opengraph-image-p98pqg.png" />
+    <meta property="og:title" content="Class12" />
+    <meta name="twitter:title" content="Class12" />
+    <meta property="og:description" content="Class 12 CAR GAME" />
+    <meta name="twitter:description" content="Class 12 CAR GAME" />
+    <link
+      rel="icon"
+      type="image/png"
+      href="https://storage.googleapis.com/gpt-engineer-file-uploads/j4fP39skTCSqlk0kYofj5wDcqf82/uploads/1769803920979-github.png" />
+
+    <script>
+      (function () {
+        try {
+          var theme = localStorage.getItem("theme");
+          if (theme === "light" || theme === "dark") {
+            document.documentElement.setAttribute("data-theme", theme);
+            return;
+          }
+          if (
+            window.matchMedia &&
+            window.matchMedia("(prefers-color-scheme: dark)").matches
+          ) {
+            document.documentElement.setAttribute("data-theme", "dark");
+            return;
+          }
+          document.documentElement.setAttribute("data-theme", "light");
+        } catch (e) {}
+      })();
+    </script>
+  </head>
 
   <body>
     <div id="root"></div>

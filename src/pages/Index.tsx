@@ -4,6 +4,7 @@ import GameTitle from "@/components/game/GameTitle";
 import PlayerSelect from "@/components/game/PlayerSelect";
 import RaceTrack from "@/components/game/RaceTrack";
 import Scoreboard from "@/components/game/Scoreboard";
+import ThemeToggle from "@/components/ThemeToggle";
 
 type GameState = "select" | "playing" | "results";
 
@@ -37,6 +38,7 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background flex flex-col items-center justify-center p-4 overflow-hidden">
+      <ThemeToggle />
       {/* Background effects */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         {/* Subtle gradient overlay */}
