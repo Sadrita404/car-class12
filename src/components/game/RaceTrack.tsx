@@ -4,6 +4,7 @@ import { useGameSounds } from "@/hooks/useGameSounds";
 
 interface RaceTrackProps {
   player: 1 | 2;
+  trackLength: 50 | 100;
   onGameEnd: (time: number) => void;
 }
 
@@ -21,9 +22,12 @@ const TRACK_HEIGHT = 520;
 const CAR_WIDTH = 36;
 const CAR_HEIGHT = 65;
 const OBSTACLE_HEIGHT = 35;
-const FINISH_DISTANCE = 5000;
 
-const RaceTrack = ({ player, onGameEnd }: RaceTrackProps) => {
+// Track length in pixels: 50m = 5000, 100m = 10000
+const getFinishDistance = (trackLength: 50 | 100) => trackLength === 50 ? 5000 : 10000;
+
+const RaceTrack = ({ player, trackLength, onGameEnd }: RaceTrackProps) => {
+  const FINISH_DISTANCE = getFinishDistance(trackLength);
   const [carX, setCarX] = useState(TRACK_WIDTH / 2 - CAR_WIDTH / 2);
   const [distance, setDistance] = useState(0);
   const [obstacles, setObstacles] = useState<Obstacle[]>([]);
