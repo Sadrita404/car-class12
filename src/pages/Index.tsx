@@ -1,14 +1,18 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
+import { Info } from "lucide-react";
 import GameTitle from "@/components/game/GameTitle";
 import PlayerSelect from "@/components/game/PlayerSelect";
 import RaceTrack from "@/components/game/RaceTrack";
 import Scoreboard from "@/components/game/Scoreboard";
 import ThemeToggle from "@/components/ThemeToggle";
+import { Button } from "@/components/ui/button";
 
 type GameState = "select" | "playing" | "results";
 
 const Index = () => {
+  const navigate = useNavigate();
   const [gameState, setGameState] = useState<GameState>("select");
   const [currentPlayer, setCurrentPlayer] = useState<1 | 2>(1);
   const [player1Score, setPlayer1Score] = useState<number | null>(null);
@@ -39,6 +43,26 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background flex flex-col items-center justify-center p-4 overflow-hidden">
       <ThemeToggle />
+      
+      {/* About Button - Fixed Left Side */}
+      <motion.div
+        className="fixed left-4 top-1/2 -translate-y-1/2 z-20"
+        initial={{ opacity: 0, x: -20 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ delay: 0.5 }}
+      >
+        <Button
+          onClick={() => navigate("/about")}
+          variant="outline"
+          className="flex flex-col items-center gap-2 py-4 px-3 h-auto border-2 border-primary/50 bg-card/80 backdrop-blur-sm hover:bg-primary hover:text-primary-foreground transition-all shadow-lg"
+          style={{ boxShadow: "0 4px 20px hsl(0 85% 55% / 0.3)" }}
+        >
+          <Info className="h-6 w-6" />
+          <span className="text-sm font-bold writing-mode-vertical" style={{ writingMode: "vertical-rl", textOrientation: "mixed" }}>
+            ABOUT
+          </span>
+        </Button>
+      </motion.div>
       {/* Background effects */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         {/* Subtle gradient overlay */}
