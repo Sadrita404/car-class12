@@ -458,26 +458,28 @@ const RaceTrack = ({ player, onGameEnd }: RaceTrackProps) => {
       </div>
 
       {/* Mobile Controls */}
-      <div className="flex items-center gap-8 mt-4">
+      <div className="flex items-center justify-center gap-12 mt-6">
         <button
-          className="w-16 h-16 bg-secondary hover:bg-secondary/80 active:bg-primary/30 border-2 border-primary/50 rounded-lg flex items-center justify-center text-3xl text-foreground transition-colors select-none touch-none"
+          className="w-24 h-24 bg-primary text-primary-foreground hover:bg-primary/90 active:scale-95 active:bg-accent border-4 border-foreground/30 rounded-2xl flex items-center justify-center text-5xl font-bold shadow-lg transition-all select-none touch-none"
+          style={{ boxShadow: "0 4px 20px hsl(0 85% 55% / 0.4)" }}
           onPointerDown={() => keysPressed.current.add("ArrowLeft")}
           onPointerUp={() => keysPressed.current.delete("ArrowLeft")}
           onPointerLeave={() => keysPressed.current.delete("ArrowLeft")}
           onPointerCancel={() => keysPressed.current.delete("ArrowLeft")}
           aria-label="Steer Left"
         >
-          ←
+          ◀
         </button>
         <button
-          className="w-16 h-16 bg-secondary hover:bg-secondary/80 active:bg-primary/30 border-2 border-primary/50 rounded-lg flex items-center justify-center text-3xl text-foreground transition-colors select-none touch-none"
+          className="w-24 h-24 bg-primary text-primary-foreground hover:bg-primary/90 active:scale-95 active:bg-accent border-4 border-foreground/30 rounded-2xl flex items-center justify-center text-5xl font-bold shadow-lg transition-all select-none touch-none"
+          style={{ boxShadow: "0 4px 20px hsl(0 85% 55% / 0.4)" }}
           onPointerDown={() => keysPressed.current.add("ArrowRight")}
           onPointerUp={() => keysPressed.current.delete("ArrowRight")}
           onPointerLeave={() => keysPressed.current.delete("ArrowRight")}
           onPointerCancel={() => keysPressed.current.delete("ArrowRight")}
           aria-label="Steer Right"
         >
-          →
+          ▶
         </button>
       </div>
 
